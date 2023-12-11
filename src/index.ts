@@ -1,5 +1,6 @@
-import morgan from 'morgan';
 import { config } from './config';
+import 'reflect-metadata';
+import morgan from 'morgan';
 import express, { Request, Response } from 'express';
 import { dataSource } from './db/data-source';
 
