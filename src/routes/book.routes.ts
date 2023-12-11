@@ -1,8 +1,9 @@
+import { bookId, bookPayload, optionalBookPayload } from '../validators';
+
 import { Book } from '../db/entity/book.entity';
 import { BookController } from '../controllers/book.controlller';
 import { BookService } from '../services/book.service';
 import { Router } from 'express';
-import { createBook } from '../validators';
 import { dataSource } from '../db/data-source';
 import { validateRequest } from '../middleware';
 
@@ -13,9 +14,14 @@ const bookController = new BookController(bookService);
 const router = Router();
 
 router.get('/', bookController.get);
-router.get('/:id', bookController.getById);
-router.post('/', validateRequest(createBook), bookController.create);
-router.patch('/:id', bookController.update);
-router.delete('/:id', bookController.del);
+router.get('/:id', validateRequest(bookId, 'params'), bookController.getById);
+router.post('/', validateRequest(bookPayload), bookController.create);
+router.delete('/:id', validateRequest(bookId, 'params'), bookController.del);
+router.patch(
+  '/:id',
+  validateRequest(bookId, 'params'),
+  validateRequest(optionalBookPayload),
+  bookController.update
+);
 
 export default router;

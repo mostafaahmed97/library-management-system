@@ -1,31 +1,51 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import { BookService } from '../services/book.service';
 
 export class BookController {
-  bookService: BookService;
+  private bookService: BookService;
 
   constructor(bookService: BookService) {
     this.bookService = bookService;
   }
 
-  async get(req: Request, res: Response) {
-    return res.send('Getting your book');
-  }
+  get = async (req: Request, res: Response, next: NextFunction) => {
+    const result = await this.bookService.get();
+    return res.send(result);
+  };
 
-  async getById(req: Request, res: Response) {
-    return res.send(`Getting id ${req.params.id}`);
-  }
+  getById = async (req: Request, res: Response, next: NextFunction) => {
+    const id = parseInt(req.params.id);
+    const book = await this.bookService.getById(id);
 
-  async create(req: Request, res: Response) {
-    console.log({ body: req.body, query: req.query, params: req.params });
-  }
+    if (!book) {
+      return next({ status: 404, error: 'Not found' });
+    }
 
-  async update(req: Request, res: Response) {
-    return res.send(`Patching id ${req.params.id}`);
-  }
+    return res.send(book);
+  };
 
-  async del(req: Request, res: Response) {
-    return res.send(`Deleting id ${req.params.id}`);
-  }
+  create = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { body: payload } = req;
+      const result = await this.bookService.create(payload);
+      return res.status(201).send('OK');
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send('NOT OK :(');
+    }
+  };
+
+  update = async (req: Request, res: Response, next: NextFunction) => {
+    const id = parseInt(req.params.id);
+    const payload = req.body;
+    await this.bookService.update(id, payload);
+    return res.send('OK');
+  };
+
+  del = async (req: Request, res: Response, next: NextFunction) => {
+    const id = parseInt(req.params.id);
+    await this.bookService.del(id);
+    return res.send('OK');
+  };
 }

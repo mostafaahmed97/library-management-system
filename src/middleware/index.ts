@@ -1,7 +1,8 @@
-import { Schema } from 'joi';
 import { NextFunction, Request, Response } from 'express';
 
-type RequestPart = 'body' | 'query';
+import { Schema } from 'joi';
+
+type RequestPart = 'body' | 'query' | 'params';
 
 // Middleware factory
 export function validateRequest(schema: Schema, part: RequestPart = 'body') {
