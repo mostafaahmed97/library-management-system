@@ -1,42 +1,36 @@
-import { Book, Borrower, Borrowing } from '../db/entity';
 import { borrowingPayload, numericId } from '../validators';
 
-import { BookBorrowingController } from '../controllers';
-import { BorrowingService } from '../services';
+import { BorrowingController } from '../controllers';
 import { Router } from 'express';
-import { dataSource } from '../db/data-source';
+import { container } from 'tsyringe';
 import { validateRequest } from '../middleware';
 
-const bookRepo = dataSource.getRepository(Book);
-const borrowerRepo = dataSource.getRepository(Borrower);
-const borrowingRepo = dataSource.getRepository(Borrowing);
+export function setupRoutes() {
+  const borrowingController = container.resolve(BorrowingController);
 
-const borrowingService = new BorrowingService(
-  bookRepo,
-  borrowerRepo,
-  borrowingRepo
-);
+  const router = Router();
 
-const borrowingController = new BookBorrowingController(borrowingService);
+  router.get('/', borrowingController.get);
 
-const router = Router();
+  router.get('/overdue', borrowingController.getOverdue);
 
-router.get('/', borrowingController.get);
+  router.post(
+    '/',
+    validateRequest(borrowingPayload),
+    borrowingController.create
+  );
 
-router.get('/overdue', borrowingController.getOverdue);
+  router.delete(
+    '/:id',
+    validateRequest(numericId, 'params'),
+    borrowingController.del
+  );
 
-router.post('/', validateRequest(borrowingPayload), borrowingController.create);
+  router.patch(
+    '/:id/return',
+    validateRequest(numericId, 'params'),
+    borrowingController.update
+  );
 
-router.delete(
-  '/:id',
-  validateRequest(numericId, 'params'),
-  borrowingController.del
-);
-
-router.patch(
-  '/:id/return',
-  validateRequest(numericId, 'params'),
-  borrowingController.update
-);
-
-export default router;
+  return router;
+}

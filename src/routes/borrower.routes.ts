@@ -1,5 +1,3 @@
-import { Book, Borrower, Borrowing } from '../db/entity';
-import { BorrowerService, BorrowingService } from '../services';
 import {
   borrowerPayload,
   numericId,
@@ -8,54 +6,41 @@ import {
 
 import { BorrowerController } from '../controllers';
 import { Router } from 'express';
-import { dataSource } from '../db/data-source';
+import { container } from 'tsyringe';
 import { validateRequest } from '../middleware';
 
-const bookRepo = dataSource.getRepository(Book);
-const borrowerRepo = dataSource.getRepository(Borrower);
-const borrowingRepo = dataSource.getRepository(Borrowing);
+export function setupRoutes() {
+  const router = Router();
+  const borrowerController = container.resolve(BorrowerController);
 
-const borrowerService = new BorrowerService(borrowerRepo);
-const borrowingService = new BorrowingService(
-  bookRepo,
-  borrowerRepo,
-  borrowingRepo
-);
+  router.get('/', borrowerController.get);
 
-const borrowerController = new BorrowerController(
-  borrowerService,
-  borrowingService
-);
+  router.get(
+    '/:id',
+    validateRequest(numericId, 'params'),
+    borrowerController.getById
+  );
 
-const router = Router();
+  router.get(
+    '/:id/active-borrowings',
+    validateRequest(numericId, 'params'),
+    borrowerController.getActiveBorrowings
+  );
 
-router.get('/', borrowerController.get);
+  router.post('/', validateRequest(borrowerPayload), borrowerController.create);
 
-router.get(
-  '/:id',
-  validateRequest(numericId, 'params'),
-  borrowerController.getById
-);
+  router.delete(
+    '/:id',
+    validateRequest(numericId, 'params'),
+    borrowerController.del
+  );
 
-router.get(
-  '/:id/active-borrowings',
-  validateRequest(numericId, 'params'),
-  borrowerController.getActiveBorrowings
-);
+  router.patch(
+    '/:id',
+    validateRequest(numericId, 'params'),
+    validateRequest(optionalBorrowerPayload),
+    borrowerController.update
+  );
 
-router.post('/', validateRequest(borrowerPayload), borrowerController.create);
-
-router.delete(
-  '/:id',
-  validateRequest(numericId, 'params'),
-  borrowerController.del
-);
-
-router.patch(
-  '/:id',
-  validateRequest(numericId, 'params'),
-  validateRequest(optionalBorrowerPayload),
-  borrowerController.update
-);
-
-export default router;
+  return router;
+}

@@ -2,7 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 
 import { BorrowerService } from '../services/borrower.service';
 import { BorrowingService } from '../services/borrowing.service';
+import { autoInjectable } from 'tsyringe';
 
+@autoInjectable()
 export class BorrowerController {
   private borrowerService: BorrowerService;
   private borrowingService: BorrowingService;

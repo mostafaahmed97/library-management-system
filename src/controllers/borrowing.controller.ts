@@ -1,8 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { BorrowingService } from '../services/borrowing.service';
+import { autoInjectable } from 'tsyringe';
 
-export class BookBorrowingController {
+@autoInjectable()
+export class BorrowingController {
   private bookBorrowService: BorrowingService;
 
   constructor(bookBorrowService: BorrowingService) {

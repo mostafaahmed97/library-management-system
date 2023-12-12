@@ -1,24 +1,30 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Express, Request, Response } from 'express';
 
-import apiRoutes from './routes';
+import { apiRoutes } from './routes';
 import { errorHandlingMiddleware } from './middleware';
 import morgan from 'morgan';
 
-const app = express();
+export function setupApp(): Express {
+  const app = express();
 
-app.use(morgan('common'));
-app.use(express.json());
+  app.use(morgan('common'));
+  app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-  return res.send('OK');
-});
+  app.get('/', (req: Request, res: Response) => {
+    return res.send('SERVER WORKING');
+  });
 
-app.use('/api', apiRoutes);
+  console.log('Generating routes for api...');
+  for (const route of apiRoutes) {
+    app.use(`/api/${route.path}`, route.generator());
+  }
+  console.log('Route generation complete');
 
-app.use((req: Request, res: Response) => {
-  return res.status(404).send('NOT FOUND');
-});
+  app.use((req: Request, res: Response) => {
+    return res.status(404).send('NOT FOUND');
+  });
 
-app.use(errorHandlingMiddleware);
+  app.use(errorHandlingMiddleware);
 
-export default app;
+  return app;
+}

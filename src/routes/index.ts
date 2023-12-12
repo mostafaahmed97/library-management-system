@@ -1,12 +1,19 @@
-import { Router } from 'express';
-import bookRoutes from './book.routes';
-import borrowerRoutes from './borrower.routes';
-import borrowingRoutes from './borrowing.routes';
+import { ApiRouteConfig } from '../types';
+import { setupRoutes as bookRoutes } from './book.routes';
+import { setupRoutes as borrowerRoutes } from './borrower.routes';
+import { setupRoutes as borrowingRoutes } from './borrowing.routes';
 
-const router = Router();
-
-router.use('/books', bookRoutes);
-router.use('/borrowers', borrowerRoutes);
-router.use('/borrowings', borrowingRoutes);
-
-export default router;
+export const apiRoutes: ApiRouteConfig[] = [
+  {
+    path: 'books',
+    generator: bookRoutes,
+  },
+  {
+    path: 'borrowers',
+    generator: borrowerRoutes,
+  },
+  {
+    path: 'borrowings',
+    generator: borrowingRoutes,
+  },
+];

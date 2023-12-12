@@ -5,7 +5,9 @@ import { Book } from '../db/entity/book.entity';
 import { Borrower } from '../db/entity/borrower.entity';
 import { Borrowing } from '../db/entity/borrowing.entity';
 import { Paginated } from '../types';
+import { autoInjectable } from 'tsyringe';
 
+@autoInjectable()
 export class BorrowingService {
   private pageSize = 10;
 

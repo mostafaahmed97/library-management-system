@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { BookService } from '../services/book.service';
+import { autoInjectable } from 'tsyringe';
 
+@autoInjectable()
 export class BookController {
   private bookService: BookService;
 

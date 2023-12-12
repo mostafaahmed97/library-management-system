@@ -1,31 +1,36 @@
 import { bookPayload, numericId, optionalBookPayload } from '../validators';
 
-import { Book } from '../db/entity/book.entity';
 import { BookController } from '../controllers/book.controller';
-import { BookService } from '../services/book.service';
 import { Router } from 'express';
-import { dataSource } from '../db/data-source';
+import { container } from 'tsyringe';
 import { validateRequest } from '../middleware';
 
-const bookRepo = dataSource.getRepository(Book);
-const bookService = new BookService(bookRepo);
-const bookController = new BookController(bookService);
+export function setupRoutes() {
+  const bookController = container.resolve(BookController);
 
-const router = Router();
+  const router = Router();
 
-router.get('/', bookController.get);
-router.get(
-  '/:id',
-  validateRequest(numericId, 'params'),
-  bookController.getById
-);
-router.post('/', validateRequest(bookPayload), bookController.create);
-router.delete('/:id', validateRequest(numericId, 'params'), bookController.del);
-router.patch(
-  '/:id',
-  validateRequest(numericId, 'params'),
-  validateRequest(optionalBookPayload),
-  bookController.update
-);
+  router.get('/', bookController.get);
 
-export default router;
+  router.get(
+    '/:id',
+    validateRequest(numericId, 'params'),
+    bookController.getById
+  );
+  router.post('/', validateRequest(bookPayload), bookController.create);
+
+  router.delete(
+    '/:id',
+    validateRequest(numericId, 'params'),
+    bookController.del
+  );
+
+  router.patch(
+    '/:id',
+    validateRequest(numericId, 'params'),
+    validateRequest(optionalBookPayload),
+    bookController.update
+  );
+
+  return router;
+}

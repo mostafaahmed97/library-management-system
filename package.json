@@ -27,6 +27,7 @@
     "morgan": "^1.10.0",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.14",
+    "tsyringe": "^4.8.0",
     "typeorm": "^0.3.17"
   }
 }

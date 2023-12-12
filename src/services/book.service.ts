@@ -2,7 +2,9 @@ import { Book } from '../db/entity/book.entity';
 import { NotFoundError } from '../errors';
 import { Paginated } from '../types';
 import { Repository } from 'typeorm';
+import { autoInjectable } from 'tsyringe';
 
+@autoInjectable()
 export class BookService {
   private pageSize = 10;
   private bookRepo: Repository<Book>;
