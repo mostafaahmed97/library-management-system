@@ -9,7 +9,6 @@ export function validateRequest(schema: Schema, part: RequestPart = 'body') {
   return (req: Request, res: Response, next: NextFunction) => {
     const { error } = schema.validate(req[part], {
       abortEarly: false,
-      allowUnknown: true,
     });
 
     if (error) {
