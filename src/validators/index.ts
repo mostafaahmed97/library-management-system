@@ -29,3 +29,9 @@ export const optionalBorrowerPayload = Joi.object<Borrower>({
   name: Joi.string().optional(),
   email: Joi.string().email().optional(),
 });
+
+export const borrowingPayload = Joi.object({
+  bookId: Joi.number().required(),
+  borrowerId: Joi.number().required(),
+  dueDate: Joi.date().greater('now').required(),
+});

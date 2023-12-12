@@ -1,8 +1,7 @@
-import { dataSource } from './data-source';
-
 import { Book } from './entity/book.entity';
 import { Borrower } from './entity/borrower.entity';
-import { BookBorrow } from './entity/book-borrow.entity';
+import { Borrowing } from './entity/borrowing.entity';
+import { dataSource } from './data-source';
 
 export async function initDbConnection() {
   try {
@@ -15,4 +14,4 @@ export async function initDbConnection() {
 
 export const BookRepo = dataSource.getRepository(Book);
 export const BorrowerRepo = dataSource.getRepository(Borrower);
-export const BookBorrowRepo = dataSource.getRepository(BookBorrow);
+export const BookBorrowRepo = dataSource.getRepository(Borrowing);

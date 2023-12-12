@@ -1,12 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { BorrowerService } from '../services/borrower.service';
+import { BorrowingService } from '../services/borrowing.service';
 
 export class BorrowerController {
   private borrowerService: BorrowerService;
+  private borrowingService: BorrowingService;
 
-  constructor(borrowerService: BorrowerService) {
+  constructor(
+    borrowerService: BorrowerService,
+    borrowingService: BorrowingService
+  ) {
     this.borrowerService = borrowerService;
+    this.borrowingService = borrowingService;
   }
 
   get = async (req: Request, res: Response, next: NextFunction) => {
@@ -22,6 +28,20 @@ export class BorrowerController {
     try {
       const id = parseInt(req.params.id);
       const book = await this.borrowerService.getById(id);
+      return res.send(book);
+    } catch (error) {
+      return next(error);
+    }
+  };
+
+  getActiveBorrowings = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const id = parseInt(req.params.id);
+      const book = await this.borrowingService.getActiveBorrowings(id);
       return res.send(book);
     } catch (error) {
       return next(error);

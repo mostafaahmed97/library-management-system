@@ -6,13 +6,14 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
 import { Book } from './book.entity';
 import { Borrower } from './borrower.entity';
 
 export type BorrowStatus = 'out' | 'returned';
 
 @Entity({ name: 'book_borrows' })
-export class BookBorrow {
+export class Borrowing {
   @PrimaryGeneratedColumn()
   id: number;
 

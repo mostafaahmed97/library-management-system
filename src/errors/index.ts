@@ -16,4 +16,10 @@ class ValidationError extends Error {
   }
 }
 
-export { NotFoundError, ResourceExistsError, ValidationError };
+class ConflictError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+export { NotFoundError, ResourceExistsError, ValidationError, ConflictError };

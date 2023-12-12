@@ -1,5 +1,10 @@
+import {
+  ConflictError,
+  NotFoundError,
+  ResourceExistsError,
+  ValidationError,
+} from '../errors';
 import { NextFunction, Request, Response } from 'express';
-import { NotFoundError, ResourceExistsError, ValidationError } from '../errors';
 
 import { Schema } from 'joi';
 
@@ -36,6 +41,10 @@ export function errorHandlingMiddleware(
   }
 
   if (err instanceof ResourceExistsError) {
+    return res.status(409).send({ error: err.message });
+  }
+
+  if (err instanceof ConflictError) {
     return res.status(409).send({ error: err.message });
   }
 
