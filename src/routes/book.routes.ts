@@ -12,6 +12,8 @@ export function setupRoutes() {
 
   router.get('/', bookController.get);
 
+  router.get('/search', bookController.search);
+
   router.get(
     '/:id',
     validateRequest(numericId, 'params'),

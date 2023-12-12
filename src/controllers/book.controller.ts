@@ -24,12 +24,16 @@ export class BookController {
     try {
       const id = parseInt(req.params.id);
       const book = await this.bookService.getById(id);
-
-      if (!book) {
-        return next({ status: 404, error: 'Not found' });
-      }
-
       return res.send(book);
+    } catch (error) {
+      return next(error);
+    }
+  };
+
+  search = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.bookService.search(req.query);
+      return res.send({ data: result });
     } catch (error) {
       return next(error);
     }

@@ -11,9 +11,6 @@ export class BookService {
   private bookRepo: BookRepository;
 
   constructor(bookRepo: BookRepository) {
-    console.log('FROM BOOK SERVICE ->>>> GOT THE INJECTED REPO', { bookRepo });
-    console.log('CONTAINER', { container });
-
     this.bookRepo = bookRepo;
   }
 
@@ -37,6 +34,14 @@ export class BookService {
     const book = await this.bookRepo.findOne({ where: { id: bookId } });
     if (!book) throw new NotFoundError('Book not found');
     return book;
+  }
+
+  async search(query: Partial<Book>): Promise<Book[]> {
+    const books = await this.bookRepo.find({
+      where: query,
+    });
+
+    return books;
   }
 
   async create(payload: Omit<Book, 'id' | 'created_at'>) {
