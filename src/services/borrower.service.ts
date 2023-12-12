@@ -1,3 +1,5 @@
+import { NotFoundError, ResourceExistsError } from '../errors';
+
 import { Borrower } from '../db/entity/borrower.entity';
 import { Paginated } from '../types';
 import { Repository } from 'typeorm';
@@ -28,6 +30,7 @@ export class BorrowerService {
 
   async getById(id: number): Promise<Borrower | null> {
     const borrower = await this.borrowerRepo.findOne({ where: { id: id } });
+    if (!borrower) throw new NotFoundError('Borrower not found');
     return borrower;
   }
 
@@ -36,7 +39,8 @@ export class BorrowerService {
       where: { email: payload.email },
     });
 
-    if (isEmailRegistered) throw new Error('Email already registered !');
+    if (isEmailRegistered)
+      throw new ResourceExistsError('Email already registered !');
 
     await this.borrowerRepo.insert({
       name: payload.name,
@@ -45,15 +49,15 @@ export class BorrowerService {
   }
 
   async update(id: number, payload: Partial<Borrower>) {
-    let borrower = await this.borrowerRepo.findOne({ where: { id: id } });
-    if (!borrower) throw new Error('Borrower not found');
+    const borrower = await this.borrowerRepo.findOne({ where: { id: id } });
+    if (!borrower) throw new NotFoundError('Borrower not found');
 
     await this.borrowerRepo.update(id, payload);
   }
 
   async del(id: number) {
-    let borrower = await this.borrowerRepo.findOne({ where: { id: id } });
-    if (!borrower) throw new Error('Borrower not found');
+    const borrower = await this.borrowerRepo.findOne({ where: { id: id } });
+    if (!borrower) throw new NotFoundError('Borrower not found');
 
     await this.borrowerRepo.delete(id);
   }

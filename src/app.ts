@@ -1,6 +1,7 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 
 import apiRoutes from './routes';
+import { errorHandlingMiddleware } from './middleware';
 import morgan from 'morgan';
 
 const app = express();
@@ -18,10 +19,6 @@ app.use((req: Request, res: Response) => {
   return res.status(404).send('NOT FOUND');
 });
 
-export default app;
+app.use(errorHandlingMiddleware);
 
-export function startServer(port: string | number) {
-  app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
-  });
-}
+export default app;

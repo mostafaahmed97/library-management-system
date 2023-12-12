@@ -1,4 +1,5 @@
 import { Book } from '../db/entity/book.entity';
+import { NotFoundError } from '../errors';
 import { Paginated } from '../types';
 import { Repository } from 'typeorm';
 
@@ -28,6 +29,7 @@ export class BookService {
 
   async getById(bookId: number): Promise<Book | null> {
     const book = await this.bookRepo.findOne({ where: { id: bookId } });
+    if (!book) throw new NotFoundError('Book not found');
     return book;
   }
 
@@ -42,13 +44,13 @@ export class BookService {
 
   async update(bookId: number, payload: Partial<Book>) {
     let book = await this.bookRepo.findOne({ where: { id: bookId } });
-    if (!book) throw 'Book not found';
+    if (!book) throw new NotFoundError('Book not found');
     await this.bookRepo.update(bookId, payload);
   }
 
   async del(bookId: number) {
     let book = await this.bookRepo.findOne({ where: { id: bookId } });
-    if (!book) throw 'Book not found';
+    if (!book) throw new NotFoundError('Book not found');
     await this.bookRepo.delete(bookId);
   }
 }
