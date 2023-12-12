@@ -1,7 +1,7 @@
 import { bookId, bookPayload, optionalBookPayload } from '../validators';
 
 import { Book } from '../db/entity/book.entity';
-import { BookController } from '../controllers/book.controlller';
+import { BookController } from '../controllers/book.controller';
 import { BookService } from '../services/book.service';
 import { Router } from 'express';
 import { dataSource } from '../db/data-source';
