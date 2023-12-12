@@ -16,9 +16,9 @@ export function setupApp(): Express {
 
   console.log('Generating routes for api...');
   for (const route of apiRoutes) {
-    app.use(`/api/${route.path}`, route.generator());
+    const handler = route.generator();
+    app.use(`/api/${route.path}`, handler);
   }
-  console.log('Route generation complete');
 
   app.use((req: Request, res: Response) => {
     return res.status(404).send('NOT FOUND');

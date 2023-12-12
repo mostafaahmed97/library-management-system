@@ -1,15 +1,19 @@
+import { autoInjectable, container, inject } from 'tsyringe';
+
 import { Book } from '../db/entity/book.entity';
+import { BookRepository } from '../db';
 import { NotFoundError } from '../errors';
 import { Paginated } from '../types';
-import { Repository } from 'typeorm';
-import { autoInjectable } from 'tsyringe';
 
 @autoInjectable()
 export class BookService {
   private pageSize = 10;
-  private bookRepo: Repository<Book>;
+  private bookRepo: BookRepository;
 
-  constructor(bookRepo: Repository<Book>) {
+  constructor(bookRepo: BookRepository) {
+    console.log('FROM BOOK SERVICE ->>>> GOT THE INJECTED REPO', { bookRepo });
+    console.log('CONTAINER', { container });
+
     this.bookRepo = bookRepo;
   }
 

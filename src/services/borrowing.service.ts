@@ -1,24 +1,23 @@
+import { BookRepository, BorrowerRepository, BorrowingRepository } from '../db';
 import { ConflictError, NotFoundError, ValidationError } from '../errors';
-import { LessThan, Repository } from 'typeorm';
 
-import { Book } from '../db/entity/book.entity';
-import { Borrower } from '../db/entity/borrower.entity';
 import { Borrowing } from '../db/entity/borrowing.entity';
+import { LessThan } from 'typeorm';
 import { Paginated } from '../types';
-import { autoInjectable } from 'tsyringe';
+import { injectable } from 'tsyringe';
 
-@autoInjectable()
+@injectable()
 export class BorrowingService {
   private pageSize = 10;
 
-  private bookRepo: Repository<Book>;
-  private borrowerRepo: Repository<Borrower>;
-  private borrowingRepo: Repository<Borrowing>;
+  private bookRepo: BookRepository;
+  private borrowerRepo: BorrowerRepository;
+  private borrowingRepo: BorrowingRepository;
 
   constructor(
-    bookRepo: Repository<Book>,
-    borrowerRepo: Repository<Borrower>,
-    borrowingRepo: Repository<Borrowing>
+    bookRepo: BookRepository,
+    borrowerRepo: BorrowerRepository,
+    borrowingRepo: BorrowingRepository
   ) {
     this.bookRepo = bookRepo;
     this.borrowerRepo = borrowerRepo;

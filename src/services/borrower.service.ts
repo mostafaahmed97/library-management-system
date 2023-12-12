@@ -2,15 +2,16 @@ import { NotFoundError, ResourceExistsError } from '../errors';
 import { autoInjectable, injectable } from 'tsyringe';
 
 import { Borrower } from '../db/entity/borrower.entity';
+import { BorrowerRepository } from '../db';
 import { Paginated } from '../types';
 import { Repository } from 'typeorm';
 
 @autoInjectable()
 export class BorrowerService {
   private pageSize = 10;
-  private borrowerRepo: Repository<Borrower>;
+  private borrowerRepo: BorrowerRepository;
 
-  constructor(borrowerRepo: Repository<Borrower>) {
+  constructor(borrowerRepo: BorrowerRepository) {
     this.borrowerRepo = borrowerRepo;
   }
 
