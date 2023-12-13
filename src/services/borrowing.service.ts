@@ -108,6 +108,7 @@ export class BorrowingService {
   async return(id: number) {
     const borrowing = await this.borrowingRepo.findOne({
       where: { id: id },
+      relations: ['book'],
     });
 
     if (!borrowing) throw new NotFoundError('Borrowing not found');
