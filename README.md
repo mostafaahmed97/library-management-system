@@ -12,6 +12,7 @@ The API offers CRUD operations for management of books, borrowers & book borrowi
   - [Prequisites](#prequisites)
   - [Environment Configuration](#environment-configuration)
   - [Scripts](#scripts)
+- [Todo / Fixes](#todo--fixes)
 
 
 ## Database Design
@@ -58,6 +59,19 @@ Now you're ready to follow the next steps.
 
 Create .env using from `.env.example` and populate the values for the created database name & user credentials.
 
+The resulting `.env` file will be similar to
+
+```
+PORT=3000
+
+DB_TYPE=postgresql
+DB_HOST=localhost
+DB_USER=postgres
+DB_PASSWORD=admin
+DB_PORT=5432
+DB_DATABASE=library_db
+```
+
 ### Scripts
 
 Run the following `npm` commands to perform the necessary setup for running the service.
@@ -77,3 +91,8 @@ npm run start:dev
 
 ```
 
+## Todo / Fixes
+
+- [ ] Add pagination to all GET endpoints that list resources
+- [ ] Complete containerization of app
+- [ ] Complete export functionality ( on branch `export`)
