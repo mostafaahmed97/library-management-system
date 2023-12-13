@@ -7,6 +7,8 @@ The API offers CRUD operations for management of books, borrowers & book borrowi
 
 - [Database Design](#database-design)
 - [REST API Documentation](#rest-api-documentation)
+  - [Endpoints](#endpoints)
+  - [Collection](#collection)
 - [Code Structure](#code-structure)
 - [Usage Guide](#usage-guide)
   - [Prequisites](#prequisites)
@@ -25,11 +27,38 @@ Used database is [PostgreSQL](https://www.postgresql.org/)
 
 ## REST API Documentation
 
-The available endpoints are documented using a [Hoppscotch](https://hoppscotch.io/) collection.
+### Endpoints
+
+The API offers multiple endpoints to manage the library resources
+
+| Endpoint                              | Description                                        |
+|---------------------------------------|----------------------------------------------------|
+| /GET/books                            | List all books                                     |
+| /GET/books/{id}                       | Get book by ID                                     |
+| /GET/books/search                     | Search books                                       |
+| /POST/books                           | Add a new book                                     |
+| /PATCH/books/{id}                     | Update book details                                |
+| /DELETE/books/{id}                    | Delete book                                        |
+| /GET/borrowers                        | List all borrowers                                 |
+| /GET/borrowers/{id}                   | Get borrower by ID                                 |
+| /GET/borrowers/{id}/active-borrowings | List all non returned book borrowings for borrower |
+| /POST/borrowers                       | Add a new borrower                                 |
+| /PATCH/borrowers/{id}                 | Update borrower details                            |
+| /DELETE/borrowers/{id}                | Delete borrower                                    |
+| /GET/borrowings                       | List all book borrowings                           |
+| /GET/borrowings/overdue               | List all overdue book borrowings                   |
+| /POST/borrowings                      | Create a new borrowing, checks out book            |
+| /PATCH/borrowings/{id}/return         | Return book                                        |
+| /DELETE/borrowings/{id}               | Delete borrowing                                   |
+
+
+### Collection
+
+All endpoints are available as a [Hoppscotch](https://hoppscotch.io/) collection.
 
 ![Alt text](./docs/api-docs.png)
 
-To run the requests & interact with the collection. Download [library-api.json](./docs/library-api.json), and then follow the import steps in the picture.
+To try the requests & interact with the collection. Download [library-api.json](./docs/library-api.json), and then follow the import steps in the picture.
 
 ![Alt text](./docs/import-steps.png)
 
