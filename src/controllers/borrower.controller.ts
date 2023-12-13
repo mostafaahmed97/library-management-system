@@ -19,7 +19,10 @@ export class BorrowerController {
 
   get = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const result = await this.borrowerService.get();
+      const page = req.query.page as string;
+      const pageNum = page ? parseInt(page) : 1;
+
+      const result = await this.borrowerService.get(pageNum);
       return res.send(result);
     } catch (error) {
       return next(error);

@@ -1,4 +1,9 @@
-import { bookPayload, numericId, optionalBookPayload } from '../validators';
+import {
+  bookPayload,
+  numericId,
+  optionalBookPayload,
+  pageNumber,
+} from '../validators';
 
 import { BookController } from '../controllers/book.controller';
 import { Router } from 'express';
@@ -10,7 +15,7 @@ export function setupRoutes() {
 
   const router = Router();
 
-  router.get('/', bookController.get);
+  router.get('/', validateRequest(pageNumber, 'query'), bookController.get);
 
   router.get('/search', bookController.search);
 

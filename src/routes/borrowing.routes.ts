@@ -1,4 +1,4 @@
-import { borrowingPayload, numericId } from '../validators';
+import { borrowingPayload, numericId, pageNumber } from '../validators';
 
 import { BorrowingController } from '../controllers';
 import { Router } from 'express';
@@ -10,7 +10,11 @@ export function setupRoutes() {
 
   const router = Router();
 
-  router.get('/', borrowingController.get);
+  router.get(
+    '/',
+    validateRequest(pageNumber, 'query'),
+    borrowingController.get
+  );
 
   router.get('/overdue', borrowingController.getOverdue);
 

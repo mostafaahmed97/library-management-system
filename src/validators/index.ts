@@ -22,6 +22,10 @@ export const numericId = Joi.object({
   id: Joi.number().required(),
 });
 
+export const pageNumber = Joi.object({
+  page: Joi.number().positive().optional(),
+});
+
 export const borrowerPayload = Joi.object<Borrower>({
   name: Joi.string().required(),
   email: Joi.string().email().required(),

@@ -13,7 +13,10 @@ export class BookController {
 
   get = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const result = await this.bookService.get();
+      const page = req.query.page as string;
+      const pageNum = page ? parseInt(page) : 1;
+
+      const result = await this.bookService.get(pageNum);
       return res.send(result);
     } catch (error) {
       return next(error);

@@ -2,6 +2,7 @@ import {
   borrowerPayload,
   numericId,
   optionalBorrowerPayload,
+  pageNumber,
 } from '../validators';
 
 import { BorrowerController } from '../controllers';
@@ -13,7 +14,7 @@ export function setupRoutes() {
   const router = Router();
   const borrowerController = container.resolve(BorrowerController);
 
-  router.get('/', borrowerController.get);
+  router.get('/', validateRequest(pageNumber, 'query'), borrowerController.get);
 
   router.get(
     '/:id',
