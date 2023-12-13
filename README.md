@@ -9,7 +9,7 @@ The API offers CRUD operations for management of books, borrowers & book borrowi
 - [REST API Documentation](#rest-api-documentation)
 - [Code Structure](#code-structure)
 - [Usage Guide](#usage-guide)
-  - [Prequisite Setup](#prequisite-setup)
+  - [Prequisites](#prequisites)
   - [Environment Configuration](#environment-configuration)
   - [Scripts](#scripts)
 
@@ -39,13 +39,14 @@ To run the requests & interact with the collection. Download [library-api.json](
 
 The code is organized to allow for ease of adding new features.
 
+Dependencies are auto injected at runtime using [tsyringe](https://github.com/microsoft/tsyringe).
+
 ![Service Structure](./docs/code-structure.png)
 
-Dependencies are auto injected at runtime using [tsyringe](https://github.com/microsoft/tsyringe).
 
 ## Usage Guide
 
-### Prequisite Setup
+### Prequisites
 
 To setup prequisites you need to install `PostgreSQL`, follow the steps here for [Windows](https://www.postgresql.org/download/windows/) or [Linux](https://ubuntu.com/server/docs/databases-postgresql). After the installation is complete, create the database that will be used by the service.
 
