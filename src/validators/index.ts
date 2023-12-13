@@ -4,6 +4,7 @@ import Joi from 'joi';
 
 export const bookPayload = Joi.object<Book>({
   title: Joi.string().required(),
+  author: Joi.string().required(),
   isbn: Joi.string().required(),
   quantity: Joi.number().positive().required(),
   location: Joi.string().required(),
@@ -11,6 +12,7 @@ export const bookPayload = Joi.object<Book>({
 
 export const optionalBookPayload = Joi.object<Book>({
   title: Joi.string().optional(),
+  author: Joi.string().optional(),
   isbn: Joi.string().optional(),
   quantity: Joi.number().optional(),
   location: Joi.string().optional(),

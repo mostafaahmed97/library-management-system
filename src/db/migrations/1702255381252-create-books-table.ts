@@ -13,6 +13,7 @@ export class Migrations1702255381252 implements MigrationInterface {
             isGenerated: true,
           },
           { name: 'title', type: 'varchar', isNullable: false },
+          { name: 'author', type: 'varchar', isNullable: false },
           { name: 'isbn', type: 'varchar', isNullable: false },
           { name: 'quantity', type: 'int', isNullable: false },
           { name: 'location', type: 'varchar', isNullable: false },

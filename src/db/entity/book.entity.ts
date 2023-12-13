@@ -9,6 +9,9 @@ export class Book {
   title: string;
 
   @Column()
+  author: string;
+
+  @Column()
   isbn: string;
 
   @Column()

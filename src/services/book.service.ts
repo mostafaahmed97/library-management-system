@@ -45,12 +45,7 @@ export class BookService {
   }
 
   async create(payload: Omit<Book, 'id' | 'created_at'>) {
-    await this.bookRepo.insert({
-      title: payload.title,
-      isbn: payload.isbn,
-      quantity: payload.quantity,
-      location: payload.location,
-    });
+    await this.bookRepo.insert(payload);
   }
 
   async update(bookId: number, payload: Partial<Book>) {
