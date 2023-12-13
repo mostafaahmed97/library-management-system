@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: database
+    build:
+      context: ./db
+      dockerfile: postgres.dockerfile
+    ports:
+      - "5432:5432"
+    networks:
+      - mynetwork
+
+  adminer:
+    container_name: adminer
+    build:
+      context: ./db
+      dockerfile: adminer.dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - mynetwork
+    depends_on:
+      - postgres
+
+  backend:
+    container_name: backend
+    build:
+      context: ./
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+    depends_on:
+      - postgres
+
+networks:
+  mynetwork:
+    driver: bridge
