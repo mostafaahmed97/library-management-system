@@ -6,8 +6,9 @@
   "scripts": {
     "start:dev": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:migrate": "npx typeorm-ts-node-commonjs migration:run -- -d ./src/db/data-source.ts",
-    "db:migrate:down": "npx typeorm-ts-node-commonjs migration:revert -- -d ./src/db/data-source.ts"
+    "build": "tsc",
+    "db:migrate": "npx typeorm-ts-node-commonjs migration:run -d ./src/db/data-source.ts",
+    "db:migrate:down": "npx typeorm-ts-node-commonjs migration:revert -d ./src/db/data-source.ts"
   },
   "keywords": [],
   "author": "",
