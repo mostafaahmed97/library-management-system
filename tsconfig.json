@@ -15,5 +15,9 @@
     "strictPropertyInitialization": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-  }
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "./utils"
+  ]
 }
