@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "db:migrate": "npx typeorm-ts-node-commonjs migration:run -d ./src/db/data-source.ts",
-    "db:migrate:down": "npx typeorm-ts-node-commonjs migration:revert -d ./src/db/data-source.ts"
+    "db:migrate:down": "npx typeorm-ts-node-commonjs migration:revert -d ./src/db/data-source.ts",
+    "db:seed": "ts-node ./utils/demo-seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.3.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "joi": "^17.11.0",
