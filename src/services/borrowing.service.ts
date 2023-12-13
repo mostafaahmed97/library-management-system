@@ -1,8 +1,8 @@
+import { Between, LessThan } from 'typeorm';
 import { BookRepository, BorrowerRepository, BorrowingRepository } from '../db';
 import { ConflictError, NotFoundError, ValidationError } from '../errors';
 
 import { Borrowing } from '../db/entity/borrowing.entity';
-import { LessThan } from 'typeorm';
 import { Paginated } from '../types';
 import { injectable } from 'tsyringe';
 
@@ -69,6 +69,18 @@ export class BorrowingService {
     });
 
     return borrowings;
+  }
+
+  async getInDateRange(start: string, end: string): Promise<Borrowing[]> {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    const results = await this.borrowingRepo.find({
+      where: { createdAt: Between(startDate, endDate) },
+      relations: ['book', 'borrower'],
+    });
+
+    return results;
   }
 
   async create(bookId: number, borrowerId: number, dueDate: string) {

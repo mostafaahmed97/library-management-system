@@ -20,6 +20,12 @@ export const numericId = Joi.object({
   id: Joi.number().required(),
 });
 
+export const exportPayload = Joi.object({
+  startDate: Joi.date().required(),
+  endDate: Joi.date().min(Joi.ref('startDate')).required(),
+  format: Joi.valid('csv', 'xlsx').required(),
+});
+
 export const borrowerPayload = Joi.object<Borrower>({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
